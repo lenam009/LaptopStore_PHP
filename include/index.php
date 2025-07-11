@@ -37,7 +37,7 @@ if (isset($_GET['search']) && isset($_GET['action'])) {
     $max = Product::getCountProductByWord("%" . $_GET['search'] . "%", $pdo);
 }
 //TRƯỜNG HỢP KEYWORD
-elseif (isset($_GET['search'])) {
+else if (isset($_GET['search'])) {
     $data = Product::getOneProductByWord("%" . $_GET['search'] . "%", $pdo, $limit, $offset);
     $max = Product::getCountProductByWord("%" . $_GET['search'] . "%", $pdo);
 }
@@ -88,6 +88,7 @@ if ($page > ceil(($max) / $productEachPage) && ($max) != 0) {
         </div>
 
     </div>
+
     <div class="row m-2">
         <div class="col-11">
             <div class="row">
@@ -109,6 +110,7 @@ if ($page > ceil(($max) / $productEachPage) && ($max) != 0) {
             <?php include '../include/typeProduct.php' ?>
         </div>
     </div>
+    
     <div class="text-center col-12 mt-3">
         <?php for ($i = $page - 1; $i <= ceil($max / $limit); $i++) : ?>
             <?php if ($i > 0) : ?>
@@ -116,15 +118,13 @@ if ($page > ceil(($max) / $productEachPage) && ($max) != 0) {
                     <a class="btn btn-danger text-white"><?= $i ?></a>
                 <?php else : ?>
                     <?php //TRƯỜNG HỢP KEYWORD VÀ SORT
-                    if (isset($_GET['search']) && isset($_GET['action'])) :;
-                        $action = $_GET['action'] ?>
+                    if (isset($_GET['search']) && isset($_GET['action'])) :; ?>
                         <a class="text-primary btn" href="../include/index.php?page=<?= $i ?>&search=<?= $_GET['search'] ?>&action=<?= $_GET['action'] ?>"><?= $i ?></a>
                     <?php //TRƯỜNG HỢP KEYWORD
                     elseif (isset($_GET['search'])) :  ?>
                         <a class="text-primary btn" href="../include/index.php?page=<?= $i ?>&search=<?= $_GET['search'] ?>"><?= $i ?></a>
                     <?php  //TRƯỜNG HỢP CATEGORY VÀ SORT
-                    elseif (isset($_GET['action']) && isset($_GET['idType'])) :;
-                        $action = $_GET['action']  ?>
+                    elseif (isset($_GET['action']) && isset($_GET['idType'])) :;  ?>
                         <a class="text-primary btn" href="../include/index.php?page=<?= $i ?>&idType=<?= $_GET['idType'] ?>&action=<?= $_GET['action'] ?>"><?= $i ?></a>
                     <?php //TRƯỜNG HỢP CATEGORY
                     elseif (isset($_GET['idType'])) : ?>

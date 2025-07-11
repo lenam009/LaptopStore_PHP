@@ -1,7 +1,13 @@
 <?php
 if (!isset($_SESSION['user'])) {
     die('You must login');
+}else{
+ if (!User::checkAdmin($_SESSION['user'], $pdo)) {
+       header('location: ../index.php');
+    }
 }
+
+
 ?>
 
 <!DOCTYPE html>
