@@ -16,9 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //TẠO MỘT SẢN PHẨM VÀ CẬP NHẬT DỮ LIỆU MÀ NGƯỜI DÙNG NHẬP CHO SẢN PHẨM ĐÓ
     $newProduct = new Product();
     //LẤY SẢN PHẨM ĐANG UPDATE BẰNG IDPRODUCT
-    $imagePro = Product::getOneProductById($_POST['idProduct'], $pdo);
     //CẬP NHẬT LẠI ẢNH CHO NEWPRODUCT
-    $newProduct->imageProduct = $imagePro->imageProduct;
+    $newProduct->imageProduct = $_POST['imageProduct'];
     //CẬP NHẬT DỮ LIỆU MÀ NGƯỜI DÙNG NHẬP
     $newProduct->idProduct = $_POST['idProduct'];
     $newProduct->nameProduct = $_POST['nameProduct'];
@@ -62,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 //TRƯỜNG HỢP PRODUCT ĐÃ CÓ ẢNH
-                if (isset($newProduct->imageProduct)) {
+                if (isset($newProduct->imageProduct) && !empty($newProduct->imageProduct)) {
                     $fname = $newProduct->imageProduct;
                     unlink('../images/' . $fname);
                     $dest = '../images/' . $fname;
@@ -131,6 +130,7 @@ else {
                         <div class="row">
                             <div class="col-3">
                                 <img src="../images/<?= $newProduct->imageProduct ?>" width="150" height="120" />
+                                <input name='imageProduct' value="<?= $newProduct->imageProduct ?>" hidden />
                             </div>
                             <div class="col-9">
                                 <input id="image" type="file" name="file" class="form-control" />
